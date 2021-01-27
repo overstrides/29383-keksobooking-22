@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Oleksandr Shut](https://up.htmlacademy.ru/javascript/22/user/29383).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рожков](https://htmlacademy.ru/profile/id1069033)
 
 ---
 
