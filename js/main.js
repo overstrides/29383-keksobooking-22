@@ -1,30 +1,19 @@
 // calculation definition from https://javascript.ru/Math.random
-function getRandomInt(min, max) {
-  let positiveNumbers = min >= 0 && max >= 0;
-  let validMax = max > min;
-
-  if (!positiveNumbers) {
-    return;
-  }
-
-  if (!validMax) {
-    return min;
-  }
-
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 function getRandomFloat(min, max, digits = 0) {
   let positiveNumbers = min >= 0 && max >= 0 && digits >= 0;
-  let validMax = max > min;
+  let maxIsMoreThanMin = max > min;
 
-  if (!positiveNumbers) {
+  if (!positiveNumbers || !maxIsMoreThanMin) {
     return;
   }
 
-  if (!validMax) {
-    return min.toFixed(digits);
-  }
-
-  return (Math.random() * (max - min) + min).toFixed(digits);
+  return +(Math.random() * (max - min) + min).toFixed(digits);
 }
+
+function getRandomInt(min, max) {
+  return getRandomFloat(min, max, 0);
+}
+
+getRandomInt(0, 10);
+getRandomFloat(0, 10, 6);
