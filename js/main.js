@@ -100,6 +100,9 @@ const createAds = () => {
   return ads;
 }
 
-const similarAds = new Array(10).fill(null).map(() => createAds());
+const createArrayAds = () => {
+  const similarAds = new Array(10).fill(null).map(() => createAds());
+  return similarAds;
+}
 
-console.log(similarAds);
+createArrayAds();
