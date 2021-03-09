@@ -9,6 +9,12 @@ const MAX_PRICE = 1000000;
 const FLAT_PRICE = 1000;
 const HOUSE_PRICE = 5000;
 const PALACE_PRICE = 10000;
+const HOUSING_TYPE = {
+  FLAT: 'flat',
+  BUNGALOW: 'bungalow',
+  HOUSE: 'house',
+  PALACE: 'palace',
+};
 
 checkinElement.addEventListener('change', (evt) => {
   checkoutElement.value = evt.target.value;
@@ -21,33 +27,33 @@ checkoutElement.addEventListener('change', (evt) => {
 housingTypeElement.addEventListener('change', (evt) => {
   const housingTypeValue = evt.target.value;
   if (priceElement.value === '') {
-    if (housingTypeValue === 'flat') {
+    if (housingTypeValue === HOUSING_TYPE.FLAT) {
       priceElement.placeholder = FLAT_PRICE;
       priceElement.min = FLAT_PRICE;
-    } else if (housingTypeValue === 'bungalow') {
+    } else if (housingTypeValue === HOUSING_TYPE.BUNGALOW) {
       priceElement.placeholder = MIN_PRICE;
       priceElement.min = MIN_PRICE;
-    } else if (housingTypeValue === 'house') {
+    } else if (housingTypeValue === HOUSING_TYPE.HOUSE) {
       priceElement.placeholder = HOUSE_PRICE;
       priceElement.min = HOUSE_PRICE;
-    } else if (housingTypeValue === 'palace') {
+    } else if (housingTypeValue === HOUSING_TYPE.PALACE) {
       priceElement.placeholder = PALACE_PRICE;
       priceElement.min = PALACE_PRICE;
     }
   } else if (priceElement.value !== '') {
-    if (housingTypeValue === 'flat' && priceElement.value < FLAT_PRICE) {
+    if (housingTypeValue === HOUSING_TYPE.FLAT && priceElement.value < FLAT_PRICE) {
       priceElement.placeholder = FLAT_PRICE;
       priceElement.min = FLAT_PRICE;
       housingTypeElement.setCustomValidity('При выборе "Тип жилья: Квартира" цена за ночь должна быть больше 1000');
-    } else if (housingTypeValue === 'house' && priceElement.value < HOUSE_PRICE) {
+    } else if (housingTypeValue === HOUSING_TYPE.HOUSE && priceElement.value < HOUSE_PRICE) {
       priceElement.placeholder = HOUSE_PRICE;
       priceElement.min = HOUSE_PRICE;
       housingTypeElement.setCustomValidity('При выборе "Тип жилья: Дом" цена за ночь должна быть больше 5000');
-    } else if (housingTypeValue === 'palace' && priceElement.value < PALACE_PRICE) {
+    } else if (housingTypeValue === HOUSING_TYPE.PALACE && priceElement.value < PALACE_PRICE) {
       priceElement.placeholder = PALACE_PRICE;
       priceElement.min = PALACE_PRICE;
       housingTypeElement.setCustomValidity('При выборе "Тип жилья: Дворец" цена за ночь должна быть больше 10 000');
-    } else if (housingTypeValue === 'bungalow') {
+    } else if (housingTypeValue === HOUSING_TYPE.BUNGALOW) {
       priceElement.placeholder = MIN_PRICE;
       priceElement.min = MIN_PRICE;
     } else {
@@ -63,11 +69,11 @@ priceElement.addEventListener('input', (evt) => {
     priceElement.setCustomValidity('Цена за ночь должна быть больше 0.');
   } else if (priceValue > MAX_PRICE) {
     priceElement.setCustomValidity('Цена за ночь не должна быть больше 1 000 000.');
-  } else if (housingTypeElement.value === 'flat' && priceValue < FLAT_PRICE) {
+  } else if (housingTypeElement.value === HOUSING_TYPE.FLAT && priceValue < FLAT_PRICE) {
     priceElement.setCustomValidity('При выборе "Тип жилья: Квартира" цена за ночь должна быть больше 1000');
-  } else if (housingTypeElement.value === 'house' && priceValue < HOUSE_PRICE) {
+  } else if (housingTypeElement.value === HOUSING_TYPE.HOUSE && priceValue < HOUSE_PRICE) {
     priceElement.setCustomValidity('При выборе "Тип жилья: Дом" цена за ночь должна быть больше 5000');
-  } else if (housingTypeElement.value === 'palace' && priceValue < PALACE_PRICE) {
+  } else if (housingTypeElement.value === HOUSING_TYPE.PALACE && priceValue < PALACE_PRICE) {
     priceElement.setCustomValidity('При выборе "Тип жилья: Дворец" цена за ночь должна быть больше 10 000');
   } else {
     priceElement.setCustomValidity('');
@@ -79,19 +85,19 @@ priceElement.addEventListener('input', (evt) => {
 const setDefaultPriceAttributes = () => {
   const housingTypeValue = housingTypeElement.value;
   switch (housingTypeValue) {
-    case 'flat':
+    case HOUSING_TYPE.FLAT:
       priceElement.placeholder = FLAT_PRICE;
       priceElement.min = FLAT_PRICE;
       break;
-    case 'bungalow':
+    case HOUSING_TYPE.BUNGALOW:
       priceElement.placeholder = MIN_PRICE;
       priceElement.min = MIN_PRICE;
       break;
-    case 'house':
+    case HOUSING_TYPE.HOUSE:
       priceElement.placeholder = HOUSE_PRICE;
       priceElement.min = HOUSE_PRICE;
       break;
-    case 'palace':
+    case HOUSING_TYPE.PALACE:
       priceElement.placeholder = PALACE_PRICE;
       priceElement.min = PALACE_PRICE;
       break;
