@@ -3,6 +3,7 @@ const housingTypeElement = formElement.querySelector('#type');
 const priceElement = formElement.querySelector('#price');
 const checkinElement = formElement.querySelector('#timein');
 const checkoutElement = formElement.querySelector('#timeout');
+const addressFormElement = document.querySelector('#address');
 
 const MIN_PRICE = 0;
 const MAX_PRICE = 1000000;
@@ -14,6 +15,10 @@ const HOUSING_TYPE = {
   BUNGALOW: 'bungalow',
   HOUSE: 'house',
   PALACE: 'palace',
+};
+const coordinatesTokio = {
+  x: '35.65283',
+  y: '139.83947',
 };
 
 checkinElement.addEventListener('change', (evt) => {
@@ -108,4 +113,8 @@ const setDefaultPriceAttributes = () => {
   }
 };
 
-export { setDefaultPriceAttributes };
+const setDefaultFieldValue = () => {
+  addressFormElement.value = coordinatesTokio.x + ', ' + coordinatesTokio.y;
+};
+
+export { setDefaultPriceAttributes, setDefaultFieldValue, addressFormElement };

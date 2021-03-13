@@ -1,9 +1,3 @@
-import { createArrayAds } from './data.js';
-
-const mapCanvasElement = document.querySelector('#map-canvas');
-
-const similarAds = createArrayAds();
-
 const similarAdsTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const getHousingType = (type) => {
@@ -67,6 +61,4 @@ const createSimilarAd = (ad) => {
   return adsElement;
 };
 
-const firstAd = createSimilarAd(similarAds[0]);
-
-mapCanvasElement.appendChild(firstAd);
+export { createSimilarAd };
