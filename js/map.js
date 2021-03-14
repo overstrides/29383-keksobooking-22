@@ -1,6 +1,6 @@
 /* global L:readonly */
 
-import { addressFormElement } from './form.js';
+import { addressElement } from './form.js';
 import { activeStatePage } from './state-page.js';
 import { createArrayAds } from './data.js';
 import { createSimilarAd } from './similar-ads.js';
@@ -20,7 +20,8 @@ const map = L.map('map-canvas')
   );
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
 const mainPinIcon = L.icon({
@@ -72,6 +73,9 @@ similarAds.forEach((similarAd) => {
 
   mainPinMarker.on('moveend', (evt) => {
     const addressСoordinates = evt.target.getLatLng();
-    addressFormElement.value = addressСoordinates.lat.toFixed(5) + ', ' + addressСoordinates.lng.toFixed(5);
+    addressElement.value =
+      addressСoordinates.lat.toFixed(5) +
+      ', ' +
+      addressСoordinates.lng.toFixed(5);
   });
 });
