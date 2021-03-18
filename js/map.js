@@ -2,10 +2,15 @@
 
 import { addressElement } from './form.js';
 import { activeStatePage } from './state-page.js';
-import { createArrayAds } from './data.js';
 import { createSimilarAd } from './similar-ads.js';
+import { getData } from './api.js';
+import { showErrorLoadNotification } from './notifications.js';
 
-const similarAds = createArrayAds();
+const SIMILAR_AD_COUNT = 10;
+
+getData((ads) => {
+  showSimilarAds(ads.slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length));
+}, () => showErrorLoadNotification('Ошибка загрузки похожих объявлений'));
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -43,39 +48,42 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-similarAds.forEach((similarAd) => {
-  const lat = similarAd.location.x;
-  const lng = similarAd.location.y;
-
-  const pinIcon = L.icon({
-    iconUrl: '../img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const pinMarker = L.marker(
-    {
-      lat,
-      lng,
-    },
-    {
-      pinIcon,
-    },
-  );
-
-  pinMarker.addTo(map).bindPopup(createSimilarAd(similarAd), {
-    keepInView: true,
-  });
-
-  mainPinMarker.on('movestart', () => {
-    pinMarker.closePopup();
-  });
-
-  mainPinMarker.on('moveend', (evt) => {
-    const addressСoordinates = evt.target.getLatLng();
-    addressElement.value =
-      addressСoordinates.lat.toFixed(5) +
-      ', ' +
-      addressСoordinates.lng.toFixed(5);
-  });
+mainPinMarker.on('moveend', (evt) => {
+  const addressСoordinates = evt.target.getLatLng();
+  addressElement.value =
+    addressСoordinates.lat.toFixed(5) +
+    ', ' +
+    addressСoordinates.lng.toFixed(5);
 });
+
+const showSimilarAds = (similarAds) => {
+  similarAds.forEach((similarAd) => {
+    const lat = similarAd.location.lat;
+    const lng = similarAd.location.lng;
+
+    const pinIcon = L.icon({
+      iconUrl: '../img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+
+    const pinMarker = L.marker(
+      {
+        lat,
+        lng,
+      },
+      {
+        pinIcon,
+      },
+    );
+
+    pinMarker.addTo(map).bindPopup(createSimilarAd(similarAd), {
+      keepInView: true,
+    });
+
+    mainPinMarker.on('movestart', () => {
+      pinMarker.closePopup();
+    });
+  });
+};
+
