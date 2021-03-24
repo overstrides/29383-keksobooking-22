@@ -3,26 +3,26 @@
 
 @font-face {
   font-family: "Roboto";
-  src: url("../fonts/Roboto-Bold.woff2") format("woff2");
+  font-style: normal;
   font-weight: 900;
-  font-style: normal;
   font-display: swap;
+  src: url("../fonts/Roboto-Bold.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("../fonts/Roboto-Regular.woff2") format("woff2");
+  font-style: normal;
   font-weight: 400;
-  font-style: normal;
   font-display: swap;
+  src: url("../fonts/Roboto-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("../fonts/Roboto-Medium.woff2") format("woff2");
-  font-weight: 500;
   font-style: normal;
+  font-weight: 500;
   font-display: swap;
+  src: url("../fonts/Roboto-Medium.woff2") format("woff2");
 }
 
 *,
@@ -38,15 +38,15 @@
 }
 
 body {
-  max-width: 1200px;
   min-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
+
+  background-color: #f0f0ea;
 
   color: #353535;
   font-family: "Roboto", "Arial", sans-serif;
   font-size: 16px;
-
-  background-color: #f0f0ea;
 }
 
 fieldset {
@@ -68,19 +68,19 @@ fieldset {
 }
 
 .map {
-  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
+  position: relative;
       -ms-flex-direction: column;
           flex-direction: column;
+          align-items: flex-end;
 
   overflow: hidden;
+  -webkit-box-align: end;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+      -ms-flex-align: end;
 }
 
 .map__canvas {
@@ -103,22 +103,22 @@ fieldset {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
           justify-content: center;
 
   width: 960px;
   height: 50px;
   margin: 0 auto;
 
+  opacity: 1;
+
   -webkit-transition: opacity 300ms ease-in;
   -o-transition: opacity 300ms ease-in;
   transition: opacity 300ms ease-in;
-
-  opacity: 1;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-align: center;
+      -ms-flex-pack: center;
 }
 
 .map__filters--disabled {
@@ -129,11 +129,11 @@ fieldset {
   height: 30px;
   margin-right: 10px;
 
+  border: 1px solid transparent;
+
   font-size: 14px;
   vertical-align: middle;
   cursor: pointer;
-
-  border: 1px solid transparent;
 }
 
 .map__filter:hover {
@@ -148,14 +148,12 @@ fieldset {
 
 .map__feature {
   display: inline-block;
-  overflow: hidden;
 
   width: 30px;
   height: 28px;
+  overflow: hidden;
 
-  font-size: 0;
-  vertical-align: middle;
-  cursor: pointer;
+  border-radius: 3px;
 
   background-color: #f8f8f8;
   background-image: url("../img/sprite-feature.svg");
@@ -163,7 +161,9 @@ fieldset {
   background-repeat: no-repeat;
   background-size: 25px 345px;
 
-  border-radius: 3px;
+  font-size: 0;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .map__feature--wifi {
@@ -226,9 +226,9 @@ fieldset {
  }
 
 .map__feature:active {
+  background-color: #ff6547;
   -webkit-box-shadow: none;
           box-shadow: none;
-  background-color: #ff6547;
 }
 
 .map__checkbox:checked + .map__feature {
@@ -281,29 +281,29 @@ fieldset {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+          align-items: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center;
 }
 
 .ad-form-header__preview {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
           align-items: center;
-
-  margin-right: 10px;
-  padding: 0 15px;
 
   width: 70px;
   height: 70px;
 
-  text-align: center;
+  margin-right: 10px;
+  padding: 0 15px;
 
   border-radius: 5px;
   background-color: #dadada;
+
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
 }
 
 .ad-form__field {
@@ -322,12 +322,12 @@ fieldset {
   height: 70px;
   padding: 20px 10px 5px;
 
-  text-align: center;
-  font-size: 14px;
-  color: #999999;
-
   border: dashed 1px #c7c7c7;
   border-radius: 5px;
+  color: #999999;
+  font-size: 14px;
+
+  text-align: center;
 
   cursor: pointer;
 }
@@ -338,23 +338,23 @@ fieldset {
 
 .ad-form-header__drop-zone:focus,
 .ad-form-header__input:focus + .ad-form-header__drop-zone {
-  color: #ff5635;
   -webkit-box-shadow: 0 0 2px 2px #ff6547;
           box-shadow: 0 0 2px 2px #ff6547;
+  color: #ff5635;
 }
 
 .ad-form__element {
-  -ms-flex-preferred-size: 25%;
       flex-basis: 25%;
   min-height: 90px;
 
   font-size: 14px;
+  -ms-flex-preferred-size: 25%;
 }
 
 .ad-form__element--wide {
-  -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
   max-width: 50%;
+  -ms-flex-preferred-size: 50%;
 }
 
 .ad-form__label {
@@ -367,15 +367,15 @@ fieldset {
 .ad-form__element textarea {
   width: calc(100% - 20px);
 
-  font-family: "Roboto", "Arial", sans-serif;
-  font-size: 18px;
-
   height: 42px;
   padding-left: 14px;
-
-  background-color: white;
   border: 1px solid #d9d9d3;
   border-radius: 4px;
+
+  background-color: white;
+
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 18px;
 }
 
 .ad-form__element input:hover,
@@ -393,8 +393,8 @@ fieldset {
 }
 
 .ad-form__element--time {
-  -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
 }
 
 .ad-form__element--time select {
@@ -411,13 +411,10 @@ fieldset {
 
 .feature {
   display: inline-block;
-  vertical-align: middle;
 
   width: 70px;
   height: 45px;
   margin-right: 2px;
-
-  font-size: 0;
 
   border: solid 1px #eee;
   border-radius: 3px;
@@ -428,6 +425,9 @@ fieldset {
   background-repeat: no-repeat;
   background-size: 35px 600px;
 
+  font-size: 0;
+  vertical-align: middle;
+
   cursor: pointer;
 }
 
@@ -437,9 +437,9 @@ fieldset {
 }
 
 .feature:active {
+  background-color: #ff6547;
   -webkit-box-shadow: none;
           box-shadow: none;
-  background-color: #ff6547;
 }
 
 .features .feature__checkbox {
@@ -530,10 +530,10 @@ fieldset {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-right: 10px;
 
   width: 150px;
   min-height: 70px;
+  margin-right: 10px;
 }
 
 .ad-form__upload .ad-form__input {
@@ -549,12 +549,12 @@ fieldset {
   height: 70px;
   padding: 20px 10px 5px;
 
-  text-align: center;
-  font-size: 14px;
-  color: #999999;
-
   border: dashed 1px #c7c7c7;
   border-radius: 5px;
+  color: #999999;
+  font-size: 14px;
+
+  text-align: center;
 
   cursor: pointer;
 }
@@ -565,43 +565,43 @@ fieldset {
 
 .ad-form__drop-zone:focus,
 .ad-form__input:focus + .ad-form__drop-zone {
-  color: #ff5635;
   -webkit-box-shadow: 0 0 2px 2px #ff6547;
           box-shadow: 0 0 2px 2px #ff6547;
+  color: #ff5635;
 }
 
 .ad-form__photo {
-  margin-right: 10px;
-  margin-bottom: 10px;
 
   width: 70px;
   height: 70px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 
   background-color: #e4e4de;
-  border-radius: 5px;
 }
 
 .ad-form__element--submit {
-  -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   padding: 40px 0;
 
   text-align: center;
+  -ms-flex-preferred-size: 100%;
 }
 
 .ad-form__submit {
-  font-size: 22px;
-  font-weight: 700;
 
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
 
   width: 206px;
   height: 60px;
-
-  background-color: white;
   border: 4px solid #ffaa99;
   border-radius: 8px;
+
+  background-color: white;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .ad-form__submit:hover,
@@ -614,22 +614,22 @@ fieldset {
 }
 
 .ad-form__submit:active {
+  border-color: #ff6d51;
   outline: none;
+  background-color: #ff6d51;
 
   color: white;
-  border-color: #ff6d51;
-  background-color: #ff6d51;
 }
 
 .ad-form__reset {
   margin: 0;
   padding: 0;
 
-  font-size: 14px;
-  text-decoration: underline;
-
   border: 0;
   background: none;
+
+  font-size: 14px;
+  text-decoration: underline;
   cursor: pointer;
 }
 
@@ -644,19 +644,19 @@ fieldset {
    ========================================================================== */
 
 .footer {
-  margin-top: 30px;
-  padding-top: 30px;
-  border-top: solid 1px #cccccc;
 
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
           align-items: flex-start;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
           justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: solid 1px #cccccc;
+  -webkit-box-align: start;
+  -webkit-box-pack: justify;
+      -ms-flex-align: start;
+      -ms-flex-pack: justify;
 }
 
 .copyright {
@@ -686,13 +686,13 @@ fieldset {
 }
 
 .contacts {
-  margin: 0;
-  padding: 0;
-  list-style: none;
 
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .contacts__link {
@@ -702,11 +702,11 @@ fieldset {
   height: 29px;
   margin-left: 10px;
 
-  font-size: 0;
-
   background-image: url("../img/sprite-social.svg");
   background-repeat: no-repeat;
   background-size: 29px 274px;
+
+  font-size: 0;
 
   cursor: pointer;
 }
@@ -776,22 +776,22 @@ fieldset {
 
 .popup__avatar {
   display: block;
-  margin-bottom: 10px;
   width: 35px;
   height: 35px;
+  margin-bottom: 10px;
 }
 
 .popup__close {
   position: absolute;
-  bottom: 100%;
   right: 0;
+  bottom: 100%;
 
   padding: 0;
 
-  font-size: 0;
-
   border: 0;
   background: none;
+
+  font-size: 0;
 }
 
 .popup__close:active {
@@ -807,13 +807,13 @@ fieldset {
 }
 
 .popup__close::after {
-  font-size: 50px;
-  line-height: 40px;
 
   display: block;
-  content: "×";
 
   color: #000000;
+  font-size: 50px;
+  line-height: 40px;
+  content: "×";
 }
 
 .popup__title {
@@ -859,17 +859,17 @@ fieldset {
 
 .popup__feature {
   display: inline-block;
-  overflow: hidden;
 
   width: 30px;
   height: 28px;
-
-  font-size: 0;
+  overflow: hidden;
 
   background-image: url("../img/sprite-feature.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 25px 345px;
+
+  font-size: 0;
 }
 
 .popup__feature--wifi {
@@ -900,11 +900,11 @@ fieldset {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+          align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
 }
 
 .popup__photo {
@@ -923,24 +923,24 @@ fieldset {
 
 .success,
 .error {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2;
 
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
 
   width: 100%;
   height: 100%;
-  overflow: auto;
 
   padding-top: 300px;
+  overflow: auto;
+
+  background-color: rgba(0, 0, 0, 0.8);
 
   text-align: center;
   vertical-align: middle;
-
-  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .success__message,
@@ -954,7 +954,6 @@ fieldset {
 
 .success__message::before,
 .error__message::before {
-  content: "";
   position: absolute;
 
   top: -150px;
@@ -963,13 +962,14 @@ fieldset {
   width: 109px;
   height: 122px;
 
-  background-image: url("../img/muffin-white.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-
   -webkit-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
+
+  background-image: url("../img/muffin-white.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  content: "";
 }
 
 .error__message::before {
@@ -977,18 +977,18 @@ fieldset {
 }
 
 .error__button {
-  padding: 10px;
-
-  font-size: 22px;
-  font-weight: 700;
 
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
+  padding: 10px;
+  border: 4px solid #ff5635;
+  border-radius: 8px;
+  background-color: #ff5635;
 
   color: white;
-  border: 4px solid #ff5635;
-  background-color: #ff5635;
-  border-radius: 8px;
+
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .error__button:hover,
@@ -1011,8 +1011,9 @@ fieldset {
   width: 1px;
   height: 1px;
   margin: -1px;
-  border: 0;
   padding: 0;
+  overflow: hidden;
+  border: 0;
 
   white-space: nowrap;
 
@@ -1020,9 +1021,27 @@ fieldset {
 
           clip-path: inset(100%);
   clip: rect(0 0 0 0);
-  overflow: hidden;
 }
 
 .hidden {
   display: none;
+}
+
+.error-load {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  padding: 35px;
+
+  background-color: red;
+
+  font-size: 24px;
+  text-align: center;
+}
+
+.ad-form .error-field {
+  border: 1px solid red;
 }

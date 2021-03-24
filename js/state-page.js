@@ -9,11 +9,7 @@ const inactiveStatePage = () => {
   fieldsetElements.forEach((fieldsetItem) => {
     fieldsetItem.disabled = true;
   });
-  mapFiltersFormElement.classList.add('map__filters--disabled');
-  mapFiltersSelectsElements.forEach((selectItem) => {
-    selectItem.disabled = true;
-  });
-  mapFiltersFieldsetElement.disabled = true;
+  inactiveMapFiltersForm();
 };
 
 const activeStatePage = () => {
@@ -21,6 +17,18 @@ const activeStatePage = () => {
   fieldsetElements.forEach((fieldsetItem) => {
     fieldsetItem.disabled = false;
   });
+  activeMapFiltersForm();
+};
+
+const inactiveMapFiltersForm = () => {
+  mapFiltersFormElement.classList.add('map__filters--disabled');
+  mapFiltersSelectsElements.forEach((selectItem) => {
+    selectItem.disabled = true;
+  });
+  mapFiltersFieldsetElement.disabled = true;
+};
+
+const activeMapFiltersForm = () => {
   mapFiltersFormElement.classList.remove('map__filters--disabled');
   mapFiltersSelectsElements.forEach((selectItem) => {
     selectItem.disabled = false;
@@ -30,4 +38,4 @@ const activeStatePage = () => {
 
 inactiveStatePage();
 
-export { inactiveStatePage, activeStatePage };
+export { inactiveStatePage, activeStatePage, inactiveMapFiltersForm, activeMapFiltersForm };

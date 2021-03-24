@@ -1,16 +1,33 @@
 /* global L:readonly */
 
 import { addressElement } from './form.js';
-import { activeStatePage } from './state-page.js';
+import { activeStatePage, inactiveMapFiltersForm, activeMapFiltersForm } from './state-page.js';
 import { createSimilarAd } from './similar-ads.js';
 import { getData } from './api.js';
 import { showErrorLoadNotification } from './notifications.js';
+import { setTypeFilter, setPriceFilter, setRoomsFilter, setGuestsFilter, setFeaturesFilter, getFilteredList} from './filter.js';
 
 const SIMILAR_AD_COUNT = 10;
 
+const getLowerNumber = (adsArray) => {
+  return adsArray.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : adsArray.length;
+};
+
 getData((ads) => {
-  showSimilarAds(ads.slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length));
-}, () => showErrorLoadNotification('Ошибка загрузки похожих объявлений'));
+  const adsList = ads.slice(0, getLowerNumber(ads));
+
+  showSimilarAds(getFilteredList(adsList));
+  setTypeFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setPriceFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setRoomsFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setGuestsFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setFeaturesFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  activeMapFiltersForm();
+}, () => {
+  inactiveMapFiltersForm();
+  showErrorLoadNotification('Ошибка загрузки похожих объявлений');
+},
+);
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -56,7 +73,11 @@ mainPinMarker.on('moveend', (evt) => {
     addressСoordinates.lng.toFixed(5);
 });
 
+const pinMarkers = L.layerGroup();
+
 const showSimilarAds = (similarAds) => {
+  clearingPinMarkers();
+
   similarAds.forEach((similarAd) => {
     const lat = similarAd.location.lat;
     const lng = similarAd.location.lng;
@@ -77,9 +98,11 @@ const showSimilarAds = (similarAds) => {
       },
     );
 
-    pinMarker.addTo(map).bindPopup(createSimilarAd(similarAd), {
+    pinMarker.bindPopup(createSimilarAd(similarAd), {
       keepInView: true,
     });
+    pinMarkers.addLayer(pinMarker);
+    pinMarkers.addTo(map);
 
     mainPinMarker.on('movestart', () => {
       pinMarker.closePopup();
@@ -87,3 +110,6 @@ const showSimilarAds = (similarAds) => {
   });
 };
 
+const clearingPinMarkers = () => {
+  pinMarkers.clearLayers();
+};
