@@ -13,13 +13,13 @@ const FilterKinds = {
   PRICE: 'price',
   ROOMS: 'rooms',
   GUESTS: 'guests',
-  FEATURES: 'features'
+  FEATURES: 'features',
 };
 const PriceValues = {
   ANY: 'any',
   MIDDLE: 'middle',
   LOW: 'low',
-  HIGH: 'high'
+  HIGH: 'high',
 };
 
 const getFilteredPrice = (ads, property, filter) => {
