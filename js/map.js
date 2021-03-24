@@ -9,13 +9,19 @@ import { setTypeFilter, setPriceFilter, setRoomsFilter, setGuestsFilter, setFeat
 
 const SIMILAR_AD_COUNT = 10;
 
+const getLowerNumber = (adsArray) => {
+  return adsArray.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : adsArray.length;
+};
+
 getData((ads) => {
-  showSimilarAds(getFilteredList(ads).slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length));
-  setTypeFilter(() => {showSimilarAds(getFilteredList(ads).slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length))});
-  setPriceFilter(() => {showSimilarAds(getFilteredList(ads).slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length))});
-  setRoomsFilter(() => {showSimilarAds(getFilteredList(ads).slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length))});
-  setGuestsFilter(() => {showSimilarAds(getFilteredList(ads).slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length))});
-  setFeaturesFilter(() => {showSimilarAds(getFilteredList(ads).slice(0, ads.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : ads.length))});
+  const adsList = ads.slice(0, getLowerNumber(ads));
+
+  showSimilarAds(getFilteredList(adsList));
+  setTypeFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setPriceFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setRoomsFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setGuestsFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setFeaturesFilter(() => {showSimilarAds(getFilteredList(adsList))});
   activeMapFiltersForm();
 }, () => {
   inactiveMapFiltersForm();
