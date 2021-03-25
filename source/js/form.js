@@ -1,4 +1,5 @@
 import { showErrorStyles, hideErrorStyles, showErrorNotification, showSuccessNotification } from './notifications.js';
+import { cleaningFormFilters } from './filter.js';
 import { sendData } from './api.js';
 
 const formElement = document.querySelector('.ad-form');
@@ -12,6 +13,8 @@ const roomNumberElement = formElement.querySelector('#room_number');
 const capacityElement = formElement.querySelector('#capacity');
 const submitElement = formElement.querySelector('.ad-form__submit');
 const resetFormElement = formElement.querySelector('.ad-form__reset');
+const avatarPreviewElement = document.querySelector('.ad-form-header__preview img');
+const photoPreviewElement = document.querySelector('.ad-form__photo');
 
 const MIN_PRICE = 0;
 const MAX_PRICE = 1000000;
@@ -257,29 +260,42 @@ checkoutElement.addEventListener('change', (evt) => {
   checkinElement.value = evt.target.value;
 });
 
+const setDefaultImages = () => {
+  avatarPreviewElement.src = 'img/muffin-grey.svg';
+  photoPreviewElement.innerHTML = '';
+};
+
 const cleaningForm = () => {
   formElement.reset();
   setDefaultFieldValue();
   setDefaultPriceAttributes();
+  setDefaultImages();
 }
 
 submitElement.addEventListener('click', () => {
   checkRoomAndCapacityFields();
 });
 
-formElement.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const submitForm = (cb) => {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  sendData(
-    () => showSuccessNotification(),
-    () => showErrorNotification(),
-    new FormData(evt.target),
-  );
-});
+    sendData(
+      () => showSuccessNotification(),
+      () => cb(),
+      () => showErrorNotification(),
+      new FormData(evt.target),
+    );
+  });
+};
 
-resetFormElement.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  cleaningForm();
-});
+const resetForm = (cb) => {
+  resetFormElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    cleaningForm();
+    cleaningFormFilters();
+    cb();
+  });
+};
 
-export {setDefaultPriceAttributes, setDefaultFieldValue, cleaningForm, addressElement };
+export {setDefaultPriceAttributes, setDefaultFieldValue, cleaningForm, addressElement, submitForm, resetForm};
