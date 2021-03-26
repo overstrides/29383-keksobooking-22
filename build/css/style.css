@@ -571,6 +571,9 @@ fieldset {
 }
 
 .ad-form__photo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 
   width: 70px;
   height: 70px;
@@ -1044,4 +1047,12 @@ fieldset {
 
 .ad-form .error-field {
   border: 1px solid red;
+}
+
+.ad-form-header__preview img {
+  object-fit: cover;
+}
+
+.ad-form__photo img {
+  object-fit: cover;
 }

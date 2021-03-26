@@ -122,4 +122,8 @@ const getFilteredList = (ads) => {
   return adsFiltered;
 };
 
-export { setTypeFilter, setPriceFilter, setRoomsFilter, setGuestsFilter, setFeaturesFilter, getFilteredList }
+const cleaningFormFilters = () => {
+  mapFiltersElement.reset();
+};
+
+export { setTypeFilter, setPriceFilter, setRoomsFilter, setGuestsFilter, setFeaturesFilter, getFilteredList, cleaningFormFilters }

@@ -1,4 +1,5 @@
 import { cleaningForm } from './form.js';
+import { cleaningFormFilters } from './filter.js';
 
 const getData = (onSuccess, onError) => {
   fetch('https://22.javascript.pages.academy/keksobooking/data')
@@ -11,7 +12,7 @@ const getData = (onSuccess, onError) => {
     });
 };
 
-const sendData = (onSuccess, onError, body) => {
+const sendData = (onSuccess, updateData, onError, body) => {
   fetch(
     'https://22.javascript.pages.academy/keksobooking',
     {
@@ -21,6 +22,8 @@ const sendData = (onSuccess, onError, body) => {
   ).then((response) => {
     if(response.ok) {
       cleaningForm();
+      cleaningFormFilters();
+      updateData();
       onSuccess();
     } else {
       onError();

@@ -1,4 +1,5 @@
 /* global L:readonly */
+/* global _:readonly */
 
 import { addressElement } from './form.js';
 import { activeStatePage, inactiveMapFiltersForm, activeMapFiltersForm } from './state-page.js';
@@ -6,8 +7,12 @@ import { createSimilarAd } from './similar-ads.js';
 import { getData } from './api.js';
 import { showErrorLoadNotification } from './notifications.js';
 import { setTypeFilter, setPriceFilter, setRoomsFilter, setGuestsFilter, setFeaturesFilter, getFilteredList} from './filter.js';
+import { submitForm, resetForm} from './form.js';
 
 const SIMILAR_AD_COUNT = 10;
+const RERENDER_DELAY = 500;
+const DEFAULT_PIN_COORDINATE_X = '35.65283';
+const DEFAULT_PIN_COORDINATE_Y = '139.83947';
 
 const getLowerNumber = (adsArray) => {
   return adsArray.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : adsArray.length;
@@ -17,11 +22,19 @@ getData((ads) => {
   const adsList = ads.slice(0, getLowerNumber(ads));
 
   showSimilarAds(getFilteredList(adsList));
-  setTypeFilter(() => {showSimilarAds(getFilteredList(adsList))});
-  setPriceFilter(() => {showSimilarAds(getFilteredList(adsList))});
-  setRoomsFilter(() => {showSimilarAds(getFilteredList(adsList))});
-  setGuestsFilter(() => {showSimilarAds(getFilteredList(adsList))});
-  setFeaturesFilter(() => {showSimilarAds(getFilteredList(adsList))});
+  setTypeFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+  setPriceFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+  setRoomsFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+  setGuestsFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+  setFeaturesFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+  submitForm(() => {
+    showSimilarAds(getFilteredList(adsList));
+    setDefaultPinCoordinates();
+  });
+  resetForm(() => {
+    showSimilarAds(getFilteredList(adsList));
+    setDefaultPinCoordinates();
+  });
   activeMapFiltersForm();
 }, () => {
   inactiveMapFiltersForm();
@@ -35,8 +48,8 @@ const map = L.map('map-canvas')
   })
   .setView(
     {
-      lat: 35.652832,
-      lng: 139.839478,
+      lat: DEFAULT_PIN_COORDINATE_X,
+      lng: DEFAULT_PIN_COORDINATE_Y,
     },
     10,
   );
@@ -54,8 +67,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.652832,
-    lng: 139.839478,
+    lat: DEFAULT_PIN_COORDINATE_X,
+    lng: DEFAULT_PIN_COORDINATE_Y,
   },
   {
     draggable: true,
@@ -110,6 +123,15 @@ const showSimilarAds = (similarAds) => {
   });
 };
 
+const setDefaultPinCoordinates = () => {
+  mainPinMarker.setLatLng({
+    lat: DEFAULT_PIN_COORDINATE_X,
+    lng: DEFAULT_PIN_COORDINATE_Y,
+  });
+};
+
 const clearingPinMarkers = () => {
   pinMarkers.clearLayers();
 };
+
+export { getData }
