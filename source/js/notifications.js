@@ -87,7 +87,7 @@ const showErrorNotification = () => {
   document.addEventListener('click', onClickErrorNotification);
 
   errorButtonElement.addEventListener('click', function() {
-    errorNotificationElement.classList.add('hidden');
+    hideErrorNotification();
   });
 };
 
