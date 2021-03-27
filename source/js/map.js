@@ -18,33 +18,32 @@ const getLowerNumber = (adsArray) => {
   return adsArray.length > SIMILAR_AD_COUNT ? SIMILAR_AD_COUNT : adsArray.length;
 };
 
-getData((ads) => {
-  const adsList = ads.slice(0, getLowerNumber(ads));
-
-  showSimilarAds(getFilteredList(adsList));
-  setTypeFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
-  setPriceFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
-  setRoomsFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
-  setGuestsFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
-  setFeaturesFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
-  submitForm(() => {
-    showSimilarAds(getFilteredList(adsList));
-    setDefaultPinCoordinates();
-  });
-  resetForm(() => {
-    showSimilarAds(getFilteredList(adsList));
-    setDefaultPinCoordinates();
-  });
-  activeMapFiltersForm();
-}, () => {
-  inactiveMapFiltersForm();
-  showErrorLoadNotification('Ошибка загрузки похожих объявлений');
-},
-);
-
 const map = L.map('map-canvas')
   .on('load', () => {
     activeStatePage();
+    getData((ads) => {
+      const adsList = ads.slice(0, getLowerNumber(ads));
+
+      showSimilarAds(adsList);
+      setTypeFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+      setPriceFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+      setRoomsFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+      setGuestsFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+      setFeaturesFilter(_.debounce(() => showSimilarAds(getFilteredList(adsList)), RERENDER_DELAY));
+      submitForm(() => {
+        showSimilarAds(adsList);
+        setDefaultPinCoordinates();
+      });
+      resetForm(() => {
+        showSimilarAds(adsList);
+        setDefaultPinCoordinates();
+      });
+      activeMapFiltersForm();
+    }, () => {
+      inactiveMapFiltersForm();
+      showErrorLoadNotification('Ошибка загрузки похожих объявлений');
+    },
+    );
   })
   .setView(
     {

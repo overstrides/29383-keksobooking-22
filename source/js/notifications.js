@@ -60,9 +60,13 @@ const hideErrorStyles = (field) => {
 createSuccessNotification();
 createErrorNotification();
 
+const hideErrorNotification = () => {
+  errorNotificationElement.classList.add('hidden');
+};
+
 const onPressEscErrorNotification = function(evt) {
   if (evt.key === 'Escape' || evt.key === 'Esc') {
-    errorNotificationElement.classList.add('hidden');
+    hideErrorNotification();
 
     document.removeEventListener('keydown', onPressEscErrorNotification);
   }
@@ -70,7 +74,7 @@ const onPressEscErrorNotification = function(evt) {
 
 const onClickErrorNotification = (evt) => {
   if (evt.target !== errorMessageElement) {
-    errorNotificationElement.classList.add('hidden');
+    hideErrorNotification();
 
     document.removeEventListener('click', onClickErrorNotification);
   }

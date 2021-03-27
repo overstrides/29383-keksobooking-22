@@ -8,13 +8,6 @@ const featuresElements = mapFiltersElement.querySelectorAll('input[name="feature
 const FILTERDEFAULTVALUE = 'any';
 const LOW_PRICE = 10000;
 const HIGH_PRICE = 50000;
-const FilterKinds = {
-  TYPE: 'type',
-  PRICE: 'price',
-  ROOMS: 'rooms',
-  GUESTS: 'guests',
-  FEATURES: 'features',
-};
 const PriceValues = {
   ANY: 'any',
   MIDDLE: 'middle',
@@ -22,63 +15,42 @@ const PriceValues = {
   HIGH: 'high',
 };
 
-const getFilteredPrice = (ads, property, filter) => {
-  let filteredList = [];
+const featuresList = [];
 
+const getFilteredPrice = (item, filter) => {
   switch(filter) {
-    case PriceValues.ANY:
-      filteredList = ads;
-      break;
     case PriceValues.MIDDLE:
-      filteredList = ads.filter((ad) => {
-        if (LOW_PRICE <= ad.offer[property] && ad.offer[property] <= HIGH_PRICE) {
-          return ad;
-        }
-      });
+      if (LOW_PRICE <= item.offer.price && item.offer.price <= HIGH_PRICE) {
+        return item;
+      }
       break;
     case PriceValues.LOW:
-      filteredList = ads.filter((ad) => {
-        if (ad.offer[property] < LOW_PRICE) {
-          return ad;
-        }
-      });
+      if (item.offer.price < LOW_PRICE) {
+        return item;
+      }
       break;
     case PriceValues.HIGH:
-      filteredList = ads.filter((ad) => {
-        if (ad.offer[property] > HIGH_PRICE) {
-          return ad;
-        }
-      });
+      if (item.offer.price > HIGH_PRICE) {
+        return item;
+      }
       break;
   }
-
-  return filteredList;
 };
 
-const getFilteredAttributes = (ads, property, filter) => {
-  const filteredList = ads.filter((ad) => {
-    if (ad.offer[property].toString() === filter || filter === FILTERDEFAULTVALUE) {
-      return ad;
-    }
-  });
+const filterHousing = (housing) => {
+  const type = housingTypeElement.value !== FILTERDEFAULTVALUE ? housing.offer.type === housingTypeElement.value : true;
+  const rooms = housingRoomsElement.value !== FILTERDEFAULTVALUE ? housing.offer.rooms.toString() === housingRoomsElement.value : true;
+  const guests = housingGuestsElement.value !== FILTERDEFAULTVALUE ? housing.offer.guests.toString() === housingGuestsElement.value : true;
+  const price = housingPriceElement.value !== FILTERDEFAULTVALUE ? getFilteredPrice(housing, housingPriceElement.value) : true;
+  const features = featuresList.length ? featuresList.every(filter => {
+    return housing.offer.features.some(feature => feature === filter);
+  }) : true;
 
-  return filteredList;
+  return type && rooms && guests && price && features;
 };
 
-const getFilteredFeatures = (ads, property, filter, isChecked = false) => {
-  let filteredList = [];
-
-  ads.forEach((ad) => {
-    if (isChecked) {
-      ad.offer.features.forEach((feature) => {
-        if (feature === filter) {
-          filteredList.push(ad);
-        }
-      });
-    } else {
-      filteredList.push(ad);
-    }
-  });
+const getFilteredList = (list) => {
+  const filteredList = list.filter(item => filterHousing(item));
 
   return filteredList;
 };
@@ -101,25 +73,19 @@ const setGuestsFilter = (cb) => {
 
 const setFeaturesFilter = (cb) => {
   featuresElements.forEach((feature) => {
-    feature.addEventListener('click', cb);
+    feature.addEventListener('click', () => {
+      if (feature.checked) {
+        featuresList.push(feature.value);
+      } else {
+        featuresList.some((item, index) => {
+          if (item === feature.value) {
+            featuresList.splice(index, 1);
+          }
+        });
+      }
+      cb();
+    });
   });
-};
-
-const getFilteredList = (ads) => {
-  let adsFiltered = ads.slice();
-  housingTypeElement.value !== FILTERDEFAULTVALUE ?
-    adsFiltered = getFilteredAttributes(adsFiltered, FilterKinds.TYPE, housingTypeElement.value) : adsFiltered;
-  housingPriceElement.value !== FILTERDEFAULTVALUE ?
-    adsFiltered = getFilteredPrice(adsFiltered, FilterKinds.PRICE, housingPriceElement.value) : adsFiltered;
-  housingRoomsElement.value !== FILTERDEFAULTVALUE ?
-    adsFiltered = getFilteredAttributes(adsFiltered, FilterKinds.ROOMS, housingRoomsElement.value) : adsFiltered;
-  housingGuestsElement.value !== FILTERDEFAULTVALUE ?
-    adsFiltered = getFilteredAttributes(adsFiltered, FilterKinds.GUESTS, housingGuestsElement.value) : adsFiltered;
-  featuresElements.forEach((feature) => {
-    adsFiltered = getFilteredFeatures(adsFiltered, FilterKinds.FEATURES, feature.value, feature.checked);
-  });
-
-  return adsFiltered;
 };
 
 const cleaningFormFilters = () => {
